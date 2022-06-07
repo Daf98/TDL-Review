@@ -11,6 +11,21 @@ const clearAll = document.querySelector('.clear-all');
 
 // Create array to store items
 let itemArray = [] || JSON.parse(localStorage.getItem('items'));
+
+const checkbox = () => {
+  document.querySelectorAll('.checkbox');
+  checkbox.forEach((checkboxInput) => {
+    checkboxInput.addEventListener('click', () => {
+      checkboxInput.nextElementSibling.classList.toggle('strike');
+      checkboxInput.parentNode.classList.toggle('clicked-on');
+      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
+      ellipsisIcon.classList.toggle('inactive-ellipsis');
+      const trashIcon = checkboxInput.parentNode.childNodes[7].childNodes[1];
+      trashIcon.classList.toggle('active-trash');
+      completeItem();
+    })
+})
+}
 const completeItem = () => {
   const localData = localStorage.getItem('items');
   const parsedData = JSON.parse(localData);
@@ -48,9 +63,8 @@ const editItems = (oldItem) => {
         }
       })
       }
-    }
-  });
-};
+    })
+  };
 
 // Remove items
 const removeItems = (li) => {
@@ -88,17 +102,7 @@ const addNewItem = (newDescription) => {
 `;
   listOfItems.appendChild(newItem);
   const checkbox = document.querySelectorAll('.checkbox');
-  checkbox.forEach((checkboxInput) => {
-    checkboxInput.addEventListener('click', () => {
-      checkboxInput.nextElementSibling.classList.toggle('strike');
-      checkboxInput.parentNode.classList.toggle('clicked-on');
-      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
-      ellipsisIcon.classList.toggle('inactive-ellipsis');
-      const trashIcon = checkboxInput.parentNode.childNodes[7].childNodes[1];
-      trashIcon.classList.toggle('active-trash');
-      completeItem();
-    });
-  });
+  checkbox();
   // Create and send new item to local storage
   const newListItem = new ListItem(newDescription, false, checkbox.length);
   itemArray.push(newListItem);
@@ -159,18 +163,7 @@ const getItemsLocal = () => {
     return null;
   });
 
-  const checkbox = document.querySelectorAll('.checkbox');
-  checkbox.forEach((checkboxInput) => {
-    checkboxInput.addEventListener('click', () => {
-      checkboxInput.nextElementSibling.classList.toggle('strike');
-      checkboxInput.parentNode.classList.toggle('clicked-on');
-      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
-      ellipsisIcon.classList.toggle('inactive-ellipsis');
-      const trashIcon = checkboxInput.parentNode.childNodes[7].childNodes[1];
-      trashIcon.classList.toggle('active-trash');
-      completeItem();
-    });
-  });
+    checkbox();
   // Remove items
   const removeItem = document.querySelectorAll('.trashcan');
   removeItem.forEach((item) => {
