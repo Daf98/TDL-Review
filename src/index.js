@@ -15,14 +15,14 @@ const completeItem = () => {
   const localData = localStorage.getItem('items');
   const parsedData = JSON.parse(localData);
   const eachItem = document.querySelectorAll('.eachItem');
-  for (let i = 0; i < eachItem.length; i += 1) {
-    if (eachItem[i].classList.contains('strike')) {
-      parsedData[i].completed = true;
+  eachItem.forEach((item) => {
+    if (item.classList.contains('strike')) {
+      parsedData.completed = true;
     } else {
-      parsedData[i].completed = false;
+      parsedData.completed = false;
     }
     localStorage.setItem('items', JSON.stringify(parsedData));
-  }
+  });
 };
 
 // Edit items
@@ -41,11 +41,12 @@ const editItems = (oldItem) => {
       oldItem.textContent = newInput.value;
       newInput.replaceWith(oldItem);
       const editedContainers = document.querySelectorAll('.new-item');
-      for (let i = 0; i < editedContainers.length; i += 1) {
-        if ((editedContainers[i].id) === newId) {
-          data[i].description = newInput.value;
+      editedContainers.forEach((container) => {
+        if ((container.id) === newId) {
+          data.description = newInput.value;
           localStorage.setItem('items', JSON.stringify(data));
         }
+      })
       }
     }
   });
@@ -60,6 +61,7 @@ const removeItems = (li) => {
   // // Filter elements that are true
   itemArray = JSON.parse(localStorage.getItem('items'));
   itemArray.splice((li.id) - 1, 1);
+  console.log(itemArray);
   localData = itemArray;
   // Update index of elements
   localData.map((item) => {
@@ -180,9 +182,9 @@ const getItemsLocal = () => {
     const localItems = localStorage.getItem('items');
     const parsedData = JSON.parse(localItems);
     const checkDelete = parsedData.filter((item) => item.completed === false);
-    for (let i = 0; i < checkDelete.length; i += 1) {
-      checkDelete[i].index = i + 1;
-    }
+    checkDelete.forEach((check) =>  {
+      check.index = i + 1;
+    });
     localStorage.setItem('items', JSON.stringify(checkDelete));
     window.location.reload();
   });
