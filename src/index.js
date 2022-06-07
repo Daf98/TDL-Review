@@ -11,21 +11,6 @@ const clearAll = document.querySelector('.clear-all');
 
 // Create array to store items
 let itemArray = [] || JSON.parse(localStorage.getItem('items'));
-
-const checkbox = () => {
-  document.querySelectorAll('.checkbox');
-  checkbox.forEach((checkboxInput) => {
-    checkboxInput.addEventListener('click', () => {
-      checkboxInput.nextElementSibling.classList.toggle('strike');
-      checkboxInput.parentNode.classList.toggle('clicked-on');
-      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
-      ellipsisIcon.classList.toggle('inactive-ellipsis');
-      const trashIcon = checkboxInput.parentNode.childNodes[7].childNodes[1];
-      trashIcon.classList.toggle('active-trash');
-      completeItem();
-    })
-})
-}
 const completeItem = () => {
   const localData = localStorage.getItem('items');
   const parsedData = JSON.parse(localData);
@@ -40,6 +25,20 @@ const completeItem = () => {
   });
 };
 
+const checkbox = () => {
+  document.querySelectorAll('.checkbox');
+  checkbox.forEach((checkboxInput) => {
+    checkboxInput.addEventListener('click', () => {
+      checkboxInput.nextElementSibling.classList.toggle('strike');
+      checkboxInput.parentNode.classList.toggle('clicked-on');
+      const ellipsisIcon = checkboxInput.parentNode.childNodes[5];
+      ellipsisIcon.classList.toggle('inactive-ellipsis');
+      const trashIcon = checkboxInput.parentNode.childNodes[7].childNodes[1];
+      trashIcon.classList.toggle('active-trash');
+      completeItem();
+    });
+  });
+};
 // Edit items
 const editItems = (oldItem) => {
   const newInput = document.createElement('input');
@@ -61,10 +60,10 @@ const editItems = (oldItem) => {
           data.description = newInput.value;
           localStorage.setItem('items', JSON.stringify(data));
         }
-      })
-      }
-    })
-  };
+      });
+    }
+  });
+};
 
 // Remove items
 const removeItems = (li) => {
@@ -75,7 +74,6 @@ const removeItems = (li) => {
   // // Filter elements that are true
   itemArray = JSON.parse(localStorage.getItem('items'));
   itemArray.splice((li.id) - 1, 1);
-  console.log(itemArray);
   localData = itemArray;
   // Update index of elements
   localData.map((item) => {
@@ -101,7 +99,6 @@ const addNewItem = (newDescription) => {
 </span>
 `;
   listOfItems.appendChild(newItem);
-  const checkbox = document.querySelectorAll('.checkbox');
   checkbox();
   // Create and send new item to local storage
   const newListItem = new ListItem(newDescription, false, checkbox.length);
@@ -153,6 +150,7 @@ const getItemsLocal = () => {
   </span>
   `;
     listOfItems.appendChild(newItem);
+
     const editItem = document.querySelectorAll('.ellipsis');
     editItem.forEach((item) => {
       item.addEventListener('click', () => {
@@ -163,7 +161,7 @@ const getItemsLocal = () => {
     return null;
   });
 
-    checkbox();
+  checkbox();
   // Remove items
   const removeItem = document.querySelectorAll('.trashcan');
   removeItem.forEach((item) => {
@@ -175,7 +173,8 @@ const getItemsLocal = () => {
     const localItems = localStorage.getItem('items');
     const parsedData = JSON.parse(localItems);
     const checkDelete = parsedData.filter((item) => item.completed === false);
-    checkDelete.forEach((check) =>  {
+    const i = 0;
+    checkDelete.forEach((check) => {
       check.index = i + 1;
     });
     localStorage.setItem('items', JSON.stringify(checkDelete));
@@ -183,4 +182,5 @@ const getItemsLocal = () => {
   });
   localStorage.setItem('items', JSON.stringify(itemArray));
 };
+
 window.addEventListener('load', getItemsLocal);
