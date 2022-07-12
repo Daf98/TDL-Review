@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# To-DO List 
+# To-Do List 
 
 > In this project I'm creating an interactive to-do list
 
@@ -20,13 +20,10 @@
 #### Step 2:
 - In the terminal, you can run:
 ```bash
-> cd portfolio
+> cd TDL-Review
 > code .
 ```
 - Then open index.html in a live server.
-
-## Online version
-
 
 ## Authors
 
@@ -43,4 +40,4 @@ Give a ⭐️ if you like this project!
 
 ## 📝 License
 
-This project is [MIT](https://www.mit.edu/) licensed.
+This project is [MIT](./MIT.md) licensed.
